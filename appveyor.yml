@@ -1,0 +1,28 @@
+version: 1.0.{build}
+image: Visual Studio 2015
+configuration: Dev
+#platform: Any CPU
+shallow_clone: true
+clone_folder: c:\projects\AppveyorEasy
+assembly_info:
+  patch: true
+  file: '**\AssemblyInfo.*'
+  assembly_version: '{version}'
+  assembly_file_version: '{version}'
+  assembly_informational_version: '{version}'
+before_build:
+  - appveyor DownloadFile "https://dist.nuget.org/win-x86-commandline/v3.5.0-rc1/NuGet.exe"
+  - nuget restore c:\projects\AppveyorEasy\src\AppveyorEasy.sln
+build:
+  project: c:\projects\AppveyorEasy\src\AppveyorEasy.sln
+  publish_wap: true
+after_build:
+  - cd c:\projects\AppveyorEasy\src\NotSoEasy
+  - dotnet restore
+  - dotnet build -c %CONFIGURATION%
+  - dotnet publish -c %CONFIGURATION% --no-build -o c:\projects\AppveyorEasy\artifacts\NotSoEasy
+  - cd c:\projects\AppveyorEasy
+  - 7z a NotSoEasy.zip %APPVEYOR_BUILD_FOLDER%\artifacts\NotSoEasy\*
+artifacts:
+  - path: NotSoEasy.zip
+    name: NotSoEasy
