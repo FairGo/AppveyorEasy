@@ -18,7 +18,7 @@ build:
   publish_wap: true
 after_build:
   - cd c:\projects\AppveyorEasy\src\NotSoEasy
-  - dotnet restore
+##  - dotnet restore
   - dotnet build -c %CONFIGURATION%
   - dotnet publish -c %CONFIGURATION% --no-build -o c:\projects\AppveyorEasy\artifacts\NotSoEasy
   - cd c:\projects\AppveyorEasy
