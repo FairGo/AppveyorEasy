@@ -1,7 +1,7 @@
 version: 1.0.{build}
 image: Visual Studio 2015
 configuration: Dev
-#platform: Any CPU
+platform: AnyCPU
 shallow_clone: true
 clone_folder: c:\projects\AppveyorEasy
 assembly_info:
